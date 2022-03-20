@@ -80,7 +80,7 @@ JSON.keys = (object) => {
 }
 
 Cookie = {
-	get: (val) => {
+	getItem: (val) => {
 		let cookies = document.cookie.split(";");
 		for (let i = 0; i < cookies.length; i++) {
 			let cook = cookies[i].split("=");
@@ -100,11 +100,9 @@ Cookie = {
 		}
 		return final;
 	},
-	set: (nam, val, del = false) => {
+	set: (nam, val, delDate = false) => {
 		let max = "";
-		if (del) {
-			max = "max-age:" + Number(del) + ";";
-		}
+		if (delDate) max = "expires:" + new Date(delDate[0], delDate[1], delDate[3]).toUTCString() + ";";
 		document.cookie = nam + "=" + encodeURIComponent(val) + ";SameSite=Lax;" + max;
 	},
 	has: (nam) => {
@@ -119,7 +117,7 @@ Cookie = {
 		return ret;
 	},
 	delete: (name) => {
-		document.cookie = name + "=;max-age=0;";
+		document.cookie = name + "=;expires=0;";
 	}
 }
 
