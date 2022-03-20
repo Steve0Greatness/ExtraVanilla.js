@@ -1,0 +1,126 @@
+@font-face {
+    font-family: "Cooper Black";
+    src: url(/Cooper_Black.ttf);
+}
+
+:root {
+    --border: 1px black solid;
+    --table-radius: 10px;
+    --other-radius: 2.5px;
+    --link: #303030;
+    --link-hover: #3030a5;
+    --link-active: #a53030;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+th,
+legend {
+    font-family: "Cooper Black";
+}
+
+th,
+legend {
+    font-size: .8rem;
+}
+
+code {
+    font-family: cursive;
+}
+
+th,
+td {
+    border: var(--border);
+    padding: 5px;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+thead > tr > th:first-child {
+    border-top-left-radius: var(--table-radius);
+}
+
+thead > tr > th:last-child {
+    border-top-right-radius: var(--table-radius);
+}
+
+tbody > tr:last-child > td:first-child {
+    border-bottom-left-radius: var(--table-radius);
+}
+
+tbody > tr:last-child > td:last-child {
+    border-bottom-right-radius: var(--table-radius);
+}
+
+input[type="checkbox"] {
+    border-radius: var(--other-radius);
+}
+
+input[type=number] {
+    border-top-right-radius: var(--other-radius);
+    border-bottom-right-radius: var(--other-radius);
+}
+
+h1 {
+    margin-top: 0;
+}
+
+mark {
+    background: black;
+    color: white;
+}
+
+button,
+input,
+select,
+fieldset {
+    border-radius: var(--table-radius);
+    color: black;
+    background: white;
+    border: var(--border);
+    margin-top: 1px;
+}
+
+input[type=checkbox],
+input[type=radio] {
+    appearance: none;
+    --square: 10px;
+    width: var(--square);
+    height: var(--square);
+}
+
+input[type=radio] {
+    border-radius: 100%;
+}
+
+input:checked {
+    background: black;
+}
+
+button,
+input[type=submit],
+input[type=reset],
+select {
+    cursor: pointer;
+}
+
+:any-link {
+    color: var(--link);
+    font-style: oblique;
+}
+
+:any-link:hover {
+    color: var(--link-hover);
+}
+
+:any-link:hover:active,
+:any-link:active {
+    color: var(--link-active);
+}

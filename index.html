@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- <meta charset="UTF-8"> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="yes.">
+    <meta name="title" content="Extra Vanilla">
+    <title>Extra Vanilla</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="vanilla.js"></script>
+</head>
+
+<body>
+    <h1><img src="/favicon.ico" height="24">Extra Vanilla<img src="/favicon.ico" height="24"></h1>
+    <a href="/download/">Download</a>
+    <h2>Logic</h2>
+    <form action="/submit/logic.htm">
+        <fieldset>
+            <legend>Logics</legend>
+            <label for="boola">Boolean 1 is true?</label><input id="boola" name="boola" type="checkbox"><br>
+            <label for="boolb">Boolean 2 is true?</label><input id="boolb" name="boolb" type="checkbox"><br>
+            <label for="gate">Logic Gate</label> <select id="gate" name="gate" required>
+                <option value="xor" selected>XOR</option>
+                <option value="nor">NOR</option>
+                <option value="xnor">XNOR</option>
+                <option value="nand">NAND</option>
+            </select>
+        </fieldset>
+        <input type="submit">
+    </form>
+    <h2>Range</h2>
+    <form action="/submit/range.htm">
+        <fieldset>
+            <legend>Start-End</legend>
+            <label for="rangestart">Start</label><input type="number" required id="rangestart" name="ranges"><br>
+            <label for="rangee">End</label><input type="number" required id="rangee" name="rangee"><br>
+            <label for="rangej">Jump</label><input type="number" required id="rangej" min="1" name="rangej">
+        </fieldset>
+        <input type="submit">
+    </form>
+    <h2>Cookies</h2>
+    <div>
+        start each with <code>Cookies</code> object
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Function</th> <th>Usage</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>get</td> <td>Get a cookie's value</td>
+            </tr>
+            <tr>
+                <td>getAll</td> <td>Object of all cookies</td>
+            </tr>
+            <tr>
+                <td>set</td> <td>Set cookie's value</td>
+            </tr>
+            <tr>
+                <td>has</td> <td>Check if a cookie exists</td>
+            </tr>
+            <tr>
+                <td>delete</td> <td>Delete a cookie</td>
+            </tr>
+        </tbody>
+    </table>
+    <h2>Add Element</h2>
+    <div>
+        <code>document.addElement</code>
+    </div>
+    This function has 3 parameters. The first one you need to set to the tagname of the element that you'd like to make. The second should be set to an the element that you'd like it to be a child of, set it to something like <code>document.getElementById("foo")</code>. In the final parameter, you need to set it to an array of the attrobutes; they should all be layed out something like <code>{ name: "foo", value: "bar" }</code>; I'd also just like to mention 3 things that are special in here:
+    <table>
+        <thead>
+            <tr>
+                <th>Attrobute</th> <th>Usage</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>style</td> <td>another array of objects, it defines the style attrobute, layed out like <code>{ name: "color", value: "#f00" }</code>.</td>
+            </tr>
+            <tr>
+                <td>text</td> <td>innerText</td>
+            </tr>
+            <tr>
+                <td>html</td> <td>innerHTML</td>
+            </tr>
+            <tr>
+                <td>class</td> <td>Either an array or a string of all classes you'd like to use.</td>
+            </tr>
+        </tbody>
+    </table>
+    <h2>Data</h2>
+    Mode, Mean, Median, and Range.
+    <table>
+        <thead>
+            <tr>
+                <th>Function</th> <th>Usage</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Array.prototype.median</td> <td>Get the median of an array</td>
+            </tr>
+            <tr>
+                <td>Math.range</td> <td>Get the range of an array or numbers</td>
+            </tr>
+            <tr>
+                <td>Math.mean</td> <td>Get the mean of an array or numbers</td>
+            </tr>
+            <tr>
+                <td>Array.prototype.mode</td> <td>Get the mode of an array</td>
+            </tr>
+        </tbody>
+    </table>
+    <h2>Fraction</h2>
+    <div>
+        Under the object of <code>Fraction</code>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Function</th> <th>Usage</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Fraction</td> <td>Create a fraction</td>
+            </tr>
+            <tr>
+                <td>Fraction.divide</td> <td>Divide 2 fractions</td>
+            </tr>
+            <tr>
+                <td>Fraction.multiply</td> <td>Multiply 2 fractions</td>
+            </tr>
+            <tr>
+                <td>Fraction.prototype.toString</td> <td>Turn a fraction into a string</td>
+            </tr>
+            <tr>
+                <td>Fraction.prototype.type</td> <td>(not a function) returns the type of a fraction(proper or improper)</td>
+            </tr>
+            <tr>
+                <td>Fraction.add</td> <td>Add 2 fractions</td>
+            </tr>
+            <tr>
+                <td>Fraction.subtract</td> <td>like add but subtract</td>
+            </tr>
+            <tr>
+                <td>Fraction.toFraction</td> <td>Convert a full number to a fraction, like 5 to 5/1</td>
+            </tr>
+            <tr>
+                <td>Fraction.prototype.toNumber</td> <td>Convert a fraction to a float(might be a full number if they devide evenly).</td>
+            </tr>
+        </tbody>
+    </table>
+    <h2>Commons</h2>
+    <form action="/submit/commons.htm">
+        <fieldset>
+            <legend>Commons</legend>
+            <label for="commons-num-a">Number 1</label>
+            <input type="number" id="commons-num-a" required name="numa"><br>
+            <label for="commons-num-b">Number 2</label>
+            <input type="number" id="commons-num-b" required name="numb"><br>
+            <label for="commons-type">Type</label>
+            <select id="commons-type" required name="type">
+                <option value="gcf" selected>Greatest Common Factor</option>
+                <option value="lcm">Least Common Multiple</option>
+            </select>
+        </fieldset>
+        <input type="submit">
+    </form>
+    <h2>Time</h2>
+    <div>Under <code>Time</code> object</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Function</th> <th>Usage</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>generateSeconds</td> <td>Returns a mesurement of seconds</td>
+            </tr>
+            <tr>
+                <td>generateMinutes</td> <td>Returns a mesurement of minutes</td>
+            </tr>
+            <tr>
+                <td>generateHours</td> <td>Returns a mesurement of hours</td>
+            </tr>
+            <tr>
+                <td>generateDays</td> <td>Returns a mesurement of days</td>
+            </tr>
+            <tr>
+                <td>generateYear</td> <td>Returns a mesurement of year</td>
+            </tr>
+        </tbody>
+    </table>
+    <h2>Notify</h2>
+    <ol>
+        <li>Body*: Body of notifacation</li>
+        <li>Title: Self explanatory</li>
+        <li>Icon: Icon sent</li>
+        <li>Link: link opened when the notifacation is clicked.</li>
+        <li>Vibration: Should the device vibrate when this is sent?</li>
+        <li>Time: Seconds until the notifaction closes</li>
+    </ol>
+    <div>Please note: if the user has notifacations disabled for the site or their browser, then this will not send.</div>
+    <div>* Required</div>
+    <h2>Other Things</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Function</th> <th>Usage</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>JSON.keys</td> <td>Just another way to do Object.keys, but smaller.</td>
+            </tr>
+            <tr>
+                <td>Math.negative</td> <td>Serves as the opposite to Math.abs</td>
+            </tr>
+            <tr>
+                <td>Math.reverse</td> <td>turns negative positive, and turns positive negative</td>
+            </tr>
+            <tr>
+                <td>Number.prototype.isEven</td> <td>Check if a number is even, put false as a parameter if you want to check if it's odd</td>
+            </tr>
+            <tr>
+                <td>Typeof</td> <td>Better typeof, has array and nil--nil is undefined and null, and array is self explanatory</td>
+            </tr>
+            <tr>
+                <td>Number.prototype.isFloat</td> <td>Check if a number is a float</td>
+            </tr>
+            <tr>
+                <td>Array.prototype.randomize</td> <td>Randomize an array</td>
+            </tr>
+            <tr>
+                <td>Object.prototype.toString</td> <td>Like JSON.stringify</td>
+            </tr>
+            <tr>
+                <td>Math.randomInt</td> <td>What you wish Math.random is.</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

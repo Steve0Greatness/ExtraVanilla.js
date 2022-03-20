@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit - Range</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/vanilla.js"></script>
+</head>
+
+<body>
+    <a href="/">Back</a>
+    <h1>Ranges</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Start</th> <th>End</th> <th>Jump</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="start"></td> <td id="end"></td> <td id="jump"></td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        Output Array:<br>
+        <code id="out"></code>
+    </div>
+    <div>For further reading, see <a href="https://en.wikipedia.org/wiki/Interval_(mathematics)">Interval (mathematics)</a> on Wikipedia.</div>
+    <h1>Usage</h1>
+    <div>Use these using <b>ArrayRange</b>, it has 2 paramaters: start and length.</div>
+    <script>
+        const params = new URLSearchParams(location.search)
+        let rangej = "1";
+        if (params.has("rangej")) rangej = params.get("rangej")
+        const ranges = { start: params.get("ranges"), end: params.get("rangee"), jump: rangej }
+        start.innerText = ranges.start.toString()
+        end.innerText = ranges.end.toString()
+        jump.innerText = ranges.jump.toString()
+        out.innerText = "[ " + ArrayRange(parseInt(ranges.start), parseInt(ranges.end), parseInt(ranges.jump)).join(", ") + " ]"
+    </script>
+</body>
+
+</html>

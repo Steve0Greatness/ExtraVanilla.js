@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit - Logic</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/vanilla.js"></script>
+</head>
+
+<body>
+    <a href="/">Back</a>
+    <h1>Results</h1>
+    <div>Gate: <b id="gate"></b></div>
+    <table>
+        <thead>
+            <tr>
+                <th>Boolean #1</th>
+                <th>Boolean #2</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="boola"></td>
+                <td id="boolb"></td>
+            </tr>
+        </tbody>
+    </table>
+    The result is <b><mark id="isTrue"></mark></b>.
+    <div>What are logic gates? You can learn about them on <a href="https://en.wikipedia.org/wiki/Logic_gate" target="new">Wikipedia</a>.<br>
+    Most programming languages do not have built in support for logic statments other than OR, AND, and NOT. However, you can make all the other logic statments using them.</div>
+    <h1>Usage</h1>
+    <div>There are multiple logic statments here, they are <b>XOR</b>, <b>NOR</b>, <B>XNOR</B>, and <b>NAND</b>. To use them, simply use the <code>Logic</code> keyword, and then put a period followed by the logic statment that you want to use.</div>
+    <script>
+        const params = new URLSearchParams(location.search),
+        gateParam = params.get("gate"),
+        gatea = Logic[gateParam]
+        var bool = {a: false, b: false}
+        if (params.has("boola")) bool.a = true
+        if (params.has("boolb")) bool.b = true
+        isTrue.innerHTML = gatea(bool.a, bool.b)
+        boola.innerHTML = bool.a.toString()
+        boolb.innerHTML = bool.b.toString()
+        gate.innerHTML = gateParam.toUpperCase()
+    </script>
+</body>
+
+</html>
