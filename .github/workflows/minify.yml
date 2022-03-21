@@ -2,6 +2,8 @@ name: Minify Workflow
 on:
   push:
     branches: [ master ]
+  repository_dispatch:
+    branches: [ master ]
 
 jobs:
   build:
@@ -14,9 +16,9 @@ jobs:
 
       # Job for Minify-JS
       - name: Minify-JS Action
-        uses: jossydevers/minify-js@v1.0.0
+        uses: jossydevers/minify-js@v1.0.1
         with:
-          directory: 'vanilla.js' # (OPTIONAL)
+          directory: '/vanilla.js' # (OPTIONAL)
           output: 'download/' # (OPTIONAL)
           
       # Auto-commit to repository

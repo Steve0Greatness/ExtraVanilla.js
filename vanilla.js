@@ -156,13 +156,11 @@ for (let keyword of Parsed.Meta.keywords) if (keyword.charAt(0) === " ") keyword
 if (Parsed.Meta.keywords.length == 1 && Parsed.Meta.keywords[0] == "") Parsed.Meta.keywords = []
 
 Number.prototype.isFloat = function() {
-	if (Math.round(this) != this) return true;
-	return false;
+	return Math.ceil(this) != this;
 }
 
 Number.prototype.isNegative = function() {
-	if (Math.abs(this) != this) return true;
-	return false;
+	return Math.abs(this) != this;
 }
 
 Array.prototype.median = function() {
@@ -235,7 +233,7 @@ Commons = {
 		while (b != 0) {
 			if (a > b) a = a - b;
 			else b = b - a;
-   		}
+		}
 		return a;
 	}
 }
@@ -353,10 +351,6 @@ Array.prototype.random = function() {
 	return this[Math.floor(Math.random() * this.length)];
 }
 
-Math.randomInt = (max) => {
-	return Math.floor(Math.random() * max);
-}
-
 Code = {
 	encode: {
 		binary: thing => {
@@ -386,4 +380,11 @@ Code = {
 		},
 		hexadecimal: hex => parseInt(hex, 16)
 	}
+}
+
+Math.Random = (min = 0, max = 5, forceint = true) => {
+	let delta = max - min,
+		random = min + Math.random() * delta;
+	if (forceint) random = Math.floor(random);
+	return random;
 }
