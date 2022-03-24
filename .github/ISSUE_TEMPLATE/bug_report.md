@@ -1,39 +1,25 @@
 ---
-name: 'Bug Report'
-about: 'Something isn't working'
-title: '[Bug]: <title>'
-labels: Bug
-assignees: Steve0Greatness
+name: Bug report
+about: Create a report to help us improve
+title: "\U0001F41B Bug:"
+labels: bug
+assignees: ''
 
 ---
 
-<!--
-Note: Please search to see if an issue already exists for the bug you encountered.
--->
+**Describe the bug**
+A clear and concise description of what the bug is.
 
-# What's happening?
-<!-- A concise description of what you're experiencing. -->
+**To Reproduce**
+What's the function? What parameters did you use?
 
-# What was supposed to happen?
-<!-- A concise description of what you expected to happen. -->
+**Expected behavior**
+A clear and concise description of what you expected to happen.
 
-# How do we reproduce it?
-<!--
-Example: steps to reproduce the behavior:
-1. In this environment...
-2. With this config...
-3. Run '...'
-4. See error...
--->
+**Bowser:**
+ - Browser [e.g. chrome, safari]
+ - Version [e.g. 22]
+ - Is [desktop/mobile]
 
-# Information on your device.
-<!--
-Example:
-- OS: Ubuntu 20.04
-- Browser: Firefox 98.0.1
--->
-
-# Anything else?
-<!--
-Links? References? Anything that will give us more context about the issue that you are encountering!
--->
+**Additional context**
+Add any other context about the problem here.
