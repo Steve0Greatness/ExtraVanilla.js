@@ -13,7 +13,23 @@ Logic = {
 	}
 }
 
-Nil = [ undefined, null, NaN ];
+class Nil {
+	constructor(define) {
+		let type = undefined;
+		if (typeof define == "number") type = NaN;
+		else if (typeof define != "undefined") type = null;
+		this.value = type;
+	}
+	get null() {
+		return null;
+	}
+	get undefined() {
+		return undefined;
+	}
+	get NaN() {
+		return NaN;
+	}
+}
 
 function ArrayRange(start, end, jump = 1) {
 	let range = [],
@@ -38,10 +54,19 @@ Math.reverse = (number) => {
 	return number * -1;
 }
 
-Typeof = (anything) => {
-	if (typeof anything == "object" && Array.isArray(anything)) return "array";
-	if (anything === null || anything === undefined || anything === NaN) return "nil";
-	return typeof anything;
+Typeof = (anything, differFloatAndInt = false, differNegAndPos = false) => {
+	let returned = typeof anything,
+		is = (type) => typeof anything == type;;
+	if (is("object") && Array.isArray(anything))
+		returned = "array"; //is it an array
+	if (anything === null || anything === undefined || (is("number") && isNaN(anything)))
+		returned = "nil"; // is null, undefined or NaN? Then it's "nil"
+	if (is("number") && (differFloatAndInt || differNegAndPos)) 
+		returned = [
+			(anything.isNegative() && differNegAndPos) ? "-": "",
+			differFloatAndInt ? (anything.isFloat() ? "float": "interger") : "number"
+		].join("");
+	return returned;
 }
 
 document.addElement = (child_tagname, parent, attributes = []) => {
@@ -253,26 +278,6 @@ Array.prototype.randomize = function(randomizes = 10) {
 	}
 }
 
-Time = {
-	generateSeconds: (secs) => {
-		return secs * 1000;
-	},
-	generateMinutes: (mins) => {
-		return mins * 60 * 1000;
-	},
-	generateHours: (hours) => {
-		return hours * 60 * 60 * 1000;
-	},
-	generateDays: (days) => {
-		return days * 24 * 60 * 60 * 1000;
-	},
-	generateYears: (years) => {
-		let leap = 0
-		if (Math.floor(years / 4) != 0) leap += Math.floor(years / 4);
-		return (years * 365 * 24 * 60 * 60 * 1000) + (leap * 24 * 60 * 60 * 1000);
-	}
-}
-
 Object.prototype.toString = function() {
 	return JSON.stringify(this)
 }
@@ -323,7 +328,7 @@ class Fraction {
 	}
 }
 
-async function Notify(body, title = false, icon = false, link = false, vib = false, time = Time.generateSeconds(10)) {
+async function Notify(body, title = false, icon = false, link = false, vib = false, time = 10000) {
 	if (!title) title = document.title;
 	let p = await Notification.requestPermission();
 	if (p != "granted") return;
@@ -337,14 +342,6 @@ async function Notify(body, title = false, icon = false, link = false, vib = fal
 	setTimeout(() => notify.close(), time);
 	if (!link) return;
 	notify.addEventListener("click", () => { window.open(link, "_blank") });
-}
-
-Typeof.number = (anything) => {
-	if (typeof anthing == "number") {
-		if (anything.isFloat()) return "float";
-		return "interger";
-	}
-	return Typeof(anything);
 }
 
 Array.prototype.random = function() {
@@ -370,12 +367,10 @@ Code = {
 		}
 	},
 	decode: {
-		binary: binary => {
-			return parseInt(binary, 2);
-		},
+		binary: binary => parseInt(binary, 2),
 		base64: base64 => {
 			let returned = atob(base64);
-			if (parseInt(returned) != NaN) return parseInt(returned);
+			if (isNaN(parseInt(returned))) return parseInt(returned);
 			return returned;
 		},
 		hexadecimal: hex => parseInt(hex, 16)
@@ -383,8 +378,7 @@ Code = {
 }
 
 Math.Random = (min = 0, max = 5, forceint = true) => {
-	let delta = max - min,
-		random = min + Math.random() * delta;
+	let random = min + Math.random() * (max - min);
 	if (forceint) random = Math.floor(random);
 	return random;
 }
