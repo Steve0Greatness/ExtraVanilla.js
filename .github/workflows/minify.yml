@@ -14,6 +14,7 @@ jobs:
       - name: Auto Minify
         uses: nizarmah/auto-minify@v2.1
         with:
+          overwrite: true
           directory: "."
           output: "download"
 
