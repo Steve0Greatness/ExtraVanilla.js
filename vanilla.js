@@ -1,3 +1,11 @@
+/* Version Checking */
+location.extravanilla_version = "public version tracker 0.1"
+fetch("https://raw.githubusercontent.com/Steve0Greatness/vanilla/main/download/version")
+	.then(res => res.text())
+	.then(data => {
+		if (data != location.extravanilla_version) console.warn("You're using an older version of Extra Vanilla, please update if you'd like the new features. If you're using a CDN, it may take a while for it to update.")
+	})
+
 Logic = {
 	xor: (boola, boolb) => {
 		return (boola || boolb) && !(boola && boolb);
@@ -125,12 +133,12 @@ Cookie = {
 		}
 		return final;
 	},
-	set: (nam, val, delDate = false) => {
+	setItem: (nam, val, delDate = false) => {
 		let max = "";
 		if (delDate) max = "expires:" + new Date(delDate[0], delDate[1], delDate[3]).toUTCString() + ";";
 		document.cookie = nam + "=" + encodeURIComponent(val) + ";SameSite=Lax;" + max;
 	},
-	has: (nam) => {
+	hasCookie: (nam) => {
 		let cookies = document.cookie.split(";");
 		let ret = false;
 		for (let i = 0; i < cookies.length; i++) {
@@ -141,7 +149,7 @@ Cookie = {
 		}
 		return ret;
 	},
-	delete: (name) => {
+	removeItem: (name) => {
 		document.cookie = name + "=;expires=0;";
 	}
 }
