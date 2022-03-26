@@ -14,9 +14,35 @@
     <h1>Download</h1>
     <p>Extra Vanilla is a JavaScript Library made for making developing in JavaScript faster.</p>
     <a href="/download/extravanilla.min.js" download><button>Download</button></a>
-    <!--<h2>CDN</h2>
+    <h2>CDN</h2>
+    <div id="notice"></div>
     <p>Content Delivery Networks hosting this()</p>
-    <input type="url" id="cdn1" readonly value=""> <label for="cdn1"></label>-->
+    <input type="url" id="cdn1" readonly class="url-copy" value="https://cdn.jsdelivr.net/gh/Steve0Greatness/vanilla@main/download/extravanilla.min.js">
+    <label for="cdn1">JSDelivr</label>
+    <input type="url" id="cdn2" readonly class="url-copy" value="https://raw.githubusercontent.com/Steve0Greatness/vanilla/main/download/extravanilla.min.js">
+    <label for="cdn2">Github</label>
+    <script>
+        const ammountOfCDNs = document.getElementsByClassName("url-copy").length,
+            notice = document.querySelector("#notice");        
+        for (let cdn = 1; cdn <= ammountOfCDNs; cdn++) {
+            document.querySelector("#cdn" + cdn.toString()).onclick = function() {
+                this.select();
+                this.setSelectionRange(0, this.value.length + 10);
+                navigator.clipboard.writeText(this.value);
+                notice.innerText = `Copied link for ${document.querySelector(`label[for="${this.id}"]`).innerHTML}.`;
+                notice.style.display = "block";
+                notice.style.padding = "15px";
+                notice.style.height = "auto";
+                notice.style["font-size"] = "15px";
+                setTimeout(() => {
+                    notice.style.display = "block";
+                    notice.style.padding = "0";
+                    notice.style.height = "0";
+                    notice.style["font-size"] = "0";
+                }, 5000);
+            }
+        }
+    </script>
 </body>
 
 </html>

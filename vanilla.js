@@ -1,6 +1,6 @@
 /* Version Checking */
 //When editeding please update the below version and the version file, make sure they are the same.
-location.extravanilla_version = "public version tracker 0.2.2"
+location.extravanilla_version = "public version tracker 0.2.3"
 fetch("https://raw.githubusercontent.com/Steve0Greatness/vanilla/main/download/version")
 	.then(res => res.text())
 	.then(data => {
@@ -152,7 +152,8 @@ Array.prototype.last = function() {
 }
 
 // Parsed.Location.search is from Wolfgang Kuehn and chickens on StackOverflow. stackoverflow.com/a/8649003
-var SearchThing___1awesome = location.search.substring(1);
+SearchThing___1awesome = location.search.substring(1);
+escapeQuotes = (s) => s.replace(/'/g, "''");
 Parsed = {
 	Location: {
 		path: location.pathname.split("/"),
@@ -170,8 +171,9 @@ Parsed = {
 		viewport: (document.querySelector("meta[name=\"viewport\"]") ?? {content:""}).content
 	}
 }
-if (location.search != "") Parsed.Location.search = JSON.parse('{"' + decodeURI(SearchThing___1awesome).replace(/\"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
+if (location.search != "") Parsed.Location.search = JSON.parse('{"' + escapeQuotes(decodeURI(SearchThing___1awesome)).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
 delete SearchThing___1awesome;
+delete escapeQuotes;
 for (let keyword of Parsed.Meta.keywords) if (keyword.charAt(0) === " ") keyword.shift();
 if (Parsed.Meta.keywords.length == 1 && Parsed.Meta.keywords[0] == "") Parsed.Meta.keywords = []
 
