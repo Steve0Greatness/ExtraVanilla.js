@@ -1,6 +1,6 @@
 /* Version Checking */
 //When editeding please update the below version and the version file, make sure they are the same.
-location.extravanilla_version = "public version tracker 0.2"
+location.extravanilla_version = "public version tracker 0.2.1"
 fetch("https://raw.githubusercontent.com/Steve0Greatness/vanilla/main/download/version")
 	.then(res => res.text())
 	.then(data => {
@@ -8,18 +8,10 @@ fetch("https://raw.githubusercontent.com/Steve0Greatness/vanilla/main/download/v
 	})
 
 Logic = {
-	xor: (boola, boolb) => {
-		return (boola || boolb) && !(boola && boolb);
-	},
-	nor: (boola, boolb) => {
-		return !(boola || boolb);
-	},
-	xnor: (boola, boolb) => {
-		return (boola && boolb) || (!boola && !boolb);
-	},
-	nand: (boola, boolb) => {
-		return ((boola || boolb) && !(boola && boolb)) || !(boola && boolb);
-	}
+	xor: (boola, boolb) => (boola || boolb) && !(boola && boolb),
+	nor: (boola, boolb) => !(boola || boolb),
+	xnor: (boola, boolb) => (boola && boolb) || (!boola && !boolb),
+	nand: (boola, boolb) => ((boola || boolb) && !(boola && boolb)) || !(boola && boolb)
 }
 
 class Nil {
@@ -391,7 +383,7 @@ Object.prototype.values = function() {
 	return Object.values(this)
 }
 
-Object.keysare = (object, keys) => Object.keys(object).join() === keys.join();
+Object.keysare = (object, keys) => Object.keys(object).sort().join() === keys.sort().join();
 JSON.keysare = Object.keysare;
 Object.prototype.keysare = function(keys) {
 	return Object.keysare(this, keys);

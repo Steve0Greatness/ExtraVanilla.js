@@ -81,7 +81,8 @@ mark {
 button,
 input,
 select,
-fieldset {
+fieldset,
+:any-link.button {
     border-radius: var(--table-radius);
     color: black;
     background: white;
@@ -108,20 +109,29 @@ input:checked {
 button,
 input[type=submit],
 input[type=reset],
-select {
+select,
+:any-link.button {
     cursor: pointer;
 }
 
-:any-link {
+:any-link.button {
+    text-decoration: none;
+    display: inline-block;
+    padding: 2px 5px;
+    font-family: sans-serif !important;
+    font-size: 13px;
+}
+
+:any-link:not(.button) {
     color: var(--link);
     font-style: oblique;
 }
 
-:any-link:hover {
+:any-link:hover:not(.button) {
     color: var(--link-hover);
 }
 
-:any-link:hover:active,
-:any-link:active {
+:any-link:hover:active:not(.button),
+:any-link:active:not(.button) {
     color: var(--link-active);
 }
