@@ -1,5 +1,6 @@
 /* Version Checking */
-location.extravanilla_version = "public version tracker 0.1"
+//When editeding please update the below version and the version file, make sure they are the same.
+location.extravanilla_version = "public version tracker 0.2"
 fetch("https://raw.githubusercontent.com/Steve0Greatness/vanilla/main/download/version")
 	.then(res => res.text())
 	.then(data => {
@@ -28,13 +29,13 @@ class Nil {
 		else if (typeof define != "undefined") type = null;
 		this.value = type;
 	}
-	get null() {
+	static null() {
 		return null;
 	}
-	get undefined() {
+	static undefined() {
 		return undefined;
 	}
-	get NaN() {
+	static NaN() {
 		return NaN;
 	}
 }
@@ -54,15 +55,11 @@ function ArrayRange(start, end, jump = 1) {
 	return range;
 }
 
-Math.negative = (number) => {
-	return Math.abs(number) * -1;
-}
+Math.negative = number => Math.abs(number) * -1;
 
-Math.reverse = (number) => {
-	return number * -1;
-}
+Math.reverse = number => number * -1;
 
-Typeof = (anything, differFloatAndInt = false, differNegAndPos = false) => {
+function Typeof(anything, differFloatAndInt = false, differNegAndPos = false) {
 	let returned = typeof anything,
 		is = (type) => typeof anything == type;;
 	if (is("object") && Array.isArray(anything))
@@ -72,7 +69,7 @@ Typeof = (anything, differFloatAndInt = false, differNegAndPos = false) => {
 	if (is("number") && (differFloatAndInt || differNegAndPos)) 
 		returned = [
 			(anything.isNegative() && differNegAndPos) ? "-": "",
-			differFloatAndInt ? (anything.isFloat() ? "float": "interger") : "number"
+			differFloatAndInt ? (anything.isFloat() ? "float": "integer") : "number"
 		].join("");
 	return returned;
 }
@@ -108,9 +105,8 @@ document.addElement = (child_tagname, parent, attributes = []) => {
 	parent.appendChild(element);
 }
 
-JSON.keys = (object) => {
-	return Object.keys(object);
-}
+JSON.keys = Object.keys;
+JSON.values = Object.values;
 
 Cookie = {
 	getItem: (val) => {
@@ -138,7 +134,7 @@ Cookie = {
 		if (delDate) max = "expires:" + new Date(delDate[0], delDate[1], delDate[3]).toUTCString() + ";";
 		document.cookie = nam + "=" + encodeURIComponent(val) + ";SameSite=Lax;" + max;
 	},
-	hasCookie: (nam) => {
+	hasItem: (nam) => {
 		let cookies = document.cookie.split(";");
 		let ret = false;
 		for (let i = 0; i < cookies.length; i++) {
@@ -154,9 +150,8 @@ Cookie = {
 	}
 }
 
-Number.prototype.isEven = function(checkEven = true) {
-	if (!checkEven) return this % 2 != 0;
-	return this % 2 == 0;
+Number.prototype.isEven = function(checkOdd = false) {
+	return !checkOdd ? this % 2 == 0 : this % 2 != 0;
 }
 
 Array.prototype.last = function() {
@@ -208,7 +203,7 @@ Array.prototype.median = function() {
 	return sort[halfway];
 }
 
-Math.mean = (array) => {
+Math.mean = array => {
 	let full = 0;
 	for (let i = 0; i < array.length; i++) {
 		full += array[i];
@@ -216,7 +211,7 @@ Math.mean = (array) => {
 	return full / array.length;
 }
 
-Math.range = (array) => {
+Math.range = array => {
 	let arr = [].concat(array);
 	arr.sort((a, b) => {
 		if (a > b) {
@@ -274,7 +269,7 @@ Commons = {
 Array.prototype.randomize = function(randomizes = 10) {
 	for (let _ = 0; _ <= randomizes; _++) {
 		this.sort((a, b) => {
-			let random = Math.round(Math.random() * 2);
+			let random = Math.floor(Math.random() * 2);
 			if (random == 0) {
 				return -1;
 			} else if (random == 1) {
@@ -324,15 +319,14 @@ class Fraction {
 		return new this(Number(string.split("/")[0]), Number(string.split("/")[1]));
 	}
 	get type() {
-		if (this.den <= this.num) return "improper";
-		return "proper";
+		return this.den <= this.num ? "improper": "proper";
 	}
 	toString() {
 		return `${this.num}/${this.den}`;
 	}
 	toNumber(allowFloats = true) {
 		let returning = this.num / this.den;
-		return returning;
+		return allowFloats ? returning: Math.round(returning);
 	}
 }
 
@@ -387,6 +381,18 @@ Code = {
 
 Math.Random = (min = 0, max = 5, forceint = true) => {
 	let random = min + Math.random() * (max - min);
-	if (forceint) random = Math.floor(random);
-	return random;
+	return forceint ? Math.floor(random) : random;
+}
+
+Object.prototype.keys = function() {
+	return Object.keys(this)
+}
+Object.prototype.values = function() {
+	return Object.values(this)
+}
+
+Object.keysare = (object, keys) => Object.keys(object).join() === keys.join();
+JSON.keysare = Object.keysare;
+Object.prototype.keysare = function(keys) {
+	return Object.keysare(this, keys);
 }
