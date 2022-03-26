@@ -36,14 +36,14 @@
     <script>
         const params = new URLSearchParams(location.search),
         gateParam = params.get("gate"),
-        gatea = Logic[gateParam]
+        gatea = gateParam in Logic ? Logic[gateParam]: () => { console.warn("not a function") }
         var bool = {a: false, b: false}
         if (params.has("boola")) bool.a = true
         if (params.has("boolb")) bool.b = true
-        isTrue.innerHTML = gatea(bool.a, bool.b)
-        boola.innerHTML = bool.a.toString()
-        boolb.innerHTML = bool.b.toString()
-        gate.innerHTML = gateParam.toUpperCase()
+        isTrue.innerText = gatea(bool.a, bool.b)
+        boola.innerText = bool.a.toString()
+        boolb.innerText = bool.b.toString()
+        gate.innerText = gateParam.toUpperCase()
     </script>
 </body>
 

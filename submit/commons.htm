@@ -32,18 +32,19 @@
     <div>They're under the <code>Commons</code> object. There's <b>gcf</b>, and <b>lcm</b>.</div>
     <script>
         const search = new URLSearchParams(location.search),
-            func = Commons[search.get("type")],
+            typeb = search.get("type"),
+            func = typeb in Commons? Commons[typeb]: () => { console.warn("not a function") },
             num = {
                 a: search.get("numa"),
                 b: search.get("numb")
             }
         document.getElementById("number1").innerHTML = search.get("numa")
         document.getElementById("number2").innerHTML = search.get("numb")
-        type.innerHTML = search.get("type").toUpperCase()
-        typea.innerHTML = search.get("type").toUpperCase()
-        numa.innerHTML = search.get("numa")
-        numb.innerHTML = search.get("numb")
-        out.innerHTML = func(Number(num.a), Number(num.b))
+        type.innerText = typeb.toUpperCase()
+        typea.innerText = typeb.toUpperCase()
+        numa.innerText = search.get("numa")
+        numb.innerText = search.get("numb")
+        out.innerText = func(Number(num.a), Number(num.b))
     </script>
 </body>
 
