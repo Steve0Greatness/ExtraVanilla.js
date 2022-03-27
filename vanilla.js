@@ -1,11 +1,12 @@
 /* Version Checking */
-//When editeding please update the below version and the version file, make sure they are the same.
-location.extravanilla_version = "public version tracker 0.2.3.1"
-fetch("https://raw.githubusercontent.com/Steve0Greatness/vanilla/main/download/version")
+// When editeding please update the below version and the version file, make sure they are the same.
+window.extravanilla_version = "public version tracker 0.2.4";
+window.extravanilla_versionTrackerURL = "https://raw.githubusercontent.com/Steve0Greatness/ExtraVanilla.js/main/download/version";
+fetch(window.extravanilla_versionTrackerURL)
 	.then(res => res.text())
-	.then(data => {
-		if (data != location.extravanilla_version) console.warn("You're using an older version of Extra Vanilla, please update if you'd like the new features. If you're using a CDN, it may take a while for it to update.")
-	})
+	.then(res => {
+		if (res != window.extravanilla_version) console.warn(`The current version of Extra Vanilla is "${res}", you're using "${window.extravanilla_version}". Unless you don't want new features, please update to ${res} from https://extravanilla.netlify.app/download/.`);
+	});
 
 Logic = {
 	xor: (boola, boolb) => (boola || boolb) && !(boola && boolb),
@@ -104,36 +105,22 @@ Cookie = {
 	getItem: (val) => {
 		let cookies = document.cookie.split(";");
 		for (let i = 0; i < cookies.length; i++) {
-			let cook = cookies[i].split("=");
-			if (cook[0].trim() === val) {
-				return decodeURIComponent(cook[1]);
-			}
+			let cookie = cookies[i].split("=");
+			if (cookie[0].trim() === val) return decodeURIComponent(cookie[1]);
 		}
 	},
-	getAll: () => {
-		let cookies = document.cookie.split(";"),
-		final = {};
-		if (document.cookie) {
-			for (let i = 0; i < cookies.length; i++) {
-				let cookie = cookies[i].split("=");
-				final[cookie[0]] = cookie[1]
-			}
-		}
-		return final;
-	},
-	setItem: (nam, val, delDate = false) => {
+	getAll: () => document.cookie ? `{\"${document.cookie.replace(/=/g, "\":\"").replace(/; /g, "\",\"")}${document.cookie[document.cookie.length] === ";" ? "": "\""}}`: {},
+	setItem: (name, val, delDate = false) => {
 		let max = "";
 		if (delDate) max = "expires:" + new Date(delDate[0], delDate[1], delDate[3]).toUTCString() + ";";
-		document.cookie = nam + "=" + encodeURIComponent(val) + ";SameSite=Lax;" + max;
+		document.cookie = name + "=" + encodeURIComponent(val) + ";SameSite=Lax;" + max;
 	},
-	hasItem: (nam) => {
+	hasItem: (name) => {
 		let cookies = document.cookie.split(";");
 		let ret = false;
 		for (let i = 0; i < cookies.length; i++) {
 			let cook = cookies[i].split("=")[0];
-			if (cook.trim() === nam) {
-				ret = true;
-			}
+			if (cook.trim() === name) ret = true;
 		}
 		return ret;
 	},
@@ -151,8 +138,7 @@ Array.prototype.last = function() {
 	return last;
 }
 
-// Parsed.Location.search is from Wolfgang Kuehn and chickens on StackOverflow. stackoverflow.com/a/8649003
-SearchThing___1awesome = location.search.substring(1);
+// Parsed.Location.search is addapted from Wolfgang Kuehn and chickens on StackOverflow. stackoverflow.com/a/8649003
 escapeQuotes = (s) => s.replace(/'/g, "''");
 escapeBackslash = (s) => s.replace(/\\/g, "\\\\");
 Parsed = {
@@ -160,23 +146,22 @@ Parsed = {
 		path: location.pathname.split("/"),
 		host: location.hostname.split("."),
 		tld: location.hostname.split(".").pop(),
-		search: {}
+		search: (location.search != "") ? JSON.parse('{"' + escapeBackslash(escapeQuotes(decodeURI(location.search.substring(1)))).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}'): {}
 	},
 	Meta: {
 		title: (document.querySelector("meta[name=\"title\"]") ?? {content:document.title}).content,
 		description: (document.querySelector("meta[name=\"description\"]") ?? {content:""}).content,
-		keywords: (document.querySelector("meta[name=\"keywords\"]") ?? {content: ""}).content.split(","),
+		keywords: ((document.querySelector("meta[name=\"keywords\"]") ?? {content: ""}).content.split(",").length == 1 && (document.querySelector("meta[name=\"keywords\"]") ?? {content: ""}).content.split(",")[0] == "") ? []: (document.querySelector("meta[name=\"keywords\"]") ?? {content: ""}).content.split(","),
 		author: (document.querySelector("meta[name=\"author\"]") ?? {content:""}).content,
 		charset: (document.querySelector("meta[charset]") ?? {getAttribute:()=>""}).getAttribute("charset"),
 		refresh: Number((document.querySelector("meta[http-equiv=\"refresh\"]") ?? {content:NaN}).content),
 		viewport: (document.querySelector("meta[name=\"viewport\"]") ?? {content:""}).content
 	}
 }
-if (location.search != "") Parsed.Location.search = JSON.parse('{"' + escapeBackslash(escapeQuotes(decodeURI(SearchThing___1awesome))).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
-delete SearchThing___1awesome;
+// yes, I am aware the object above is kindof a mess, but that's a problem for me later.
 delete escapeQuotes;
+delete escapeBackslash;
 for (let keyword of Parsed.Meta.keywords) if (keyword.charAt(0) === " ") keyword.shift();
-if (Parsed.Meta.keywords.length == 1 && Parsed.Meta.keywords[0] == "") Parsed.Meta.keywords = []
 
 Number.prototype.isFloat = function() {
 	return Math.ceil(this) != this;
@@ -221,19 +206,18 @@ Math.range = array => {
 	return end - array[0];
 }
 
-// Array.prototype.mode is taken from an answer by Sacho on StackExchange's Code Review. codereview.stackexchange.com/a/68342
+// Array.prototype.mode is adapted from an answer by Sacho on StackExchange. codereview.stackexchange.com/a/68342
 Array.prototype.mode = function() {
-	if (this.length == 1) return null;
+	if (this.length === 1) return this[0];
 	let numMapping = {},
  		greatestFreq = 0,
 		mode;
-	this.forEach((number) => {
-		numMapping[number] = (numMapping[number] || 0) + 1;
-		if (greatestFreq < numMapping[number]) {
-			greatestFreq = numMapping[number];
-			mode = number;
-		}
-	});
+	for (let i of this) {
+		numMapping[i] = (numMapping[i] || 0) + 1;
+		if (!(greatestFreq < numMapping[i])) return;
+		greatestFreq = numMapping[i];
+		mode = i;
+	}
 	if (typeof mode == "number") return +mode;
 	return mode;
 }
@@ -241,21 +225,19 @@ Array.prototype.mode = function() {
 // lcm addapted from rb.gy/81tp11
 // gcf addapted from Amani on StackOverflow. stackoverflow.com/a/17445307
 Commons = {
-	lcm: (num1, num2) => {
+	lcm: (a, b) => {
 		let hcf;
-		for (let i = 1; i <= num1 && i <= num2; i++) {
-			if( num1 % i == 0 && num2 % i == 0) {
-				hcf = i;
-			};
+		for (let i = 1; i <= a && i <= b; i++) {
+			if (a % i == 0 && b % i == 0) hcf = i;
 		};
-		let lcm = (num1 * num2) / hcf;
+		let lcm = (a * b) / hcf;
 		return lcm;
 	},
 	gcf: (a, b) => {
-		if (a == 0) return b;
+		if (a === 0) return b;
 		while (b != 0) {
-			if (a > b) a = a - b;
-			else b = b - a;
+			if (a > b) a -= b;
+			else b -= a;
 		}
 		return a;
 	}
@@ -367,7 +349,7 @@ Code = {
 		binary: binary => parseInt(binary, 2),
 		base64: base64 => {
 			let returned = atob(base64);
-			if (isNaN(parseInt(returned))) return parseInt(returned);
+			if (!isNaN(parseInt(returned))) return parseInt(returned);
 			return returned;
 		},
 		hexadecimal: hex => parseInt(hex, 16)
@@ -380,10 +362,10 @@ Math.Random = (min = 0, max = 5, forceint = true) => {
 }
 
 Object.prototype.keys = function() {
-	return Object.keys(this)
+	return Object.keys(this);
 }
 Object.prototype.values = function() {
-	return Object.values(this)
+	return Object.values(this);
 }
 
 Object.keysare = (object, keys) => Object.keys(object).sort().join() === keys.sort().join();

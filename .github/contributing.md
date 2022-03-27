@@ -1,0 +1,4 @@
+# Contributing
+When contributing to this library, it is important to remember that any, and all, code that you submit will be under the MPL V2.0. Also, if you use code from StackOverflow, please make sure to add a comment ontop of the function(or the object the function is in and telling which key the function is under) container credits to the user(and/or website) that you got it from, with a link to it too(if the link is too long, [please shorten it](https://free-url-shortener.rb.gy/)).
+
+When contributing to `/vanilla.js`, you'll need to manually update the `location.extravanilla_version` variable. Also make sure to update `/download/version` to have the ***same exact*** text. Once you've done that, please minify the the JS file and put the output into `/download/extravanilla.min.js`.
