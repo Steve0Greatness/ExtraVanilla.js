@@ -1,7 +1,7 @@
 ---
 name: Feature request
 about: Request a new feature
-title: "\U00002728 Feature Request:"
+title: "✨ Feature Request:"
 labels: enhancement
 assignees: ''
 
