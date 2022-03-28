@@ -1,6 +1,6 @@
 /* Version Checking */
 // When editeding please update the below version and the version file, make sure they are the same.
-window.extravanilla_version = "public version tracker 0.2.4";
+window.extravanilla_version = "public version tracker 0.2.4.1";
 window.extravanilla_versionTrackerURL = "https://raw.githubusercontent.com/Steve0Greatness/ExtraVanilla.js/main/download/version";
 fetch(window.extravanilla_versionTrackerURL)
 	.then(res => res.text())
@@ -139,14 +139,13 @@ Array.prototype.last = function() {
 }
 
 // Parsed.Location.search is addapted from Wolfgang Kuehn and chickens on StackOverflow. stackoverflow.com/a/8649003
-escapeQuotes = (s) => s.replace(/'/g, "''");
-escapeBackslash = (s) => s.replace(/\\/g, "\\\\");
+escapestuff = (s) => s.replace(/['"]/g, "''").replace(/\\/g, "\\\\");
 Parsed = {
 	Location: {
 		path: location.pathname.split("/"),
 		host: location.hostname.split("."),
 		tld: location.hostname.split(".").pop(),
-		search: (location.search != "") ? JSON.parse('{"' + escapeBackslash(escapeQuotes(decodeURI(location.search.substring(1)))).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}'): {}
+		search: (location.search != "") ? JSON.parse('{"' + escapestuff(decodeURI(location.search.substring(1))).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}'): {}
 	},
 	Meta: {
 		title: (document.querySelector("meta[name=\"title\"]") ?? {content:document.title}).content,
@@ -159,8 +158,7 @@ Parsed = {
 	}
 }
 // yes, I am aware the object above is kindof a mess, but that's a problem for me later.
-delete escapeQuotes;
-delete escapeBackslash;
+delete escapestuff;
 for (let keyword of Parsed.Meta.keywords) if (keyword.charAt(0) === " ") keyword.shift();
 
 Number.prototype.isFloat = function() {
