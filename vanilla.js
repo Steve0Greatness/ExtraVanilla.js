@@ -1,6 +1,6 @@
 /* Version Checking */
 // When editeding please update the below version and the version file, make sure they are the same.
-window.extravanilla_version = "public version tracker 0.2.4.1";
+window.extravanilla_version = "public version tracker 0.2.4.2";
 window.extravanilla_versionTrackerURL = "https://raw.githubusercontent.com/Steve0Greatness/ExtraVanilla.js/main/download/version";
 fetch(window.extravanilla_versionTrackerURL)
 	.then(res => res.text())
@@ -35,16 +35,13 @@ class Nil {
 
 function ArrayRange(start, end, jump = 1) {
 	let range = [],
-	change = Math.abs(jump);
-	if (end > start) {
-		for (let i = start; i <= end; i += change) {
-			range.push(i);
-		}
-		return range;
-	}
-	for (let i = start; i >= end; i -= change) {
+		inc = (end > start) ? Math.abs(jump): (Math.abs(jump) * -1),
+		i = start,
+		check = (i, a) => i <= a;
+	if (end < start)
+		check = (i, a) => i >= a;
+	for (i = start; check(i, end); i += inc) 
 		range.push(i);
-	}
 	return range;
 }
 
@@ -134,12 +131,11 @@ Number.prototype.isEven = function(checkOdd = false) {
 }
 
 Array.prototype.last = function() {
-	let last = this.slice(-1)[0];
-	return last;
+	return this.slice(-1)[0];
 }
 
 // Parsed.Location.search is addapted from Wolfgang Kuehn and chickens on StackOverflow. stackoverflow.com/a/8649003
-escapestuff = (s) => s.replace(/['"]/g, "''").replace(/\\/g, "\\\\");
+escapestuff = s => s.replace(/'/g, "''").replace(/\\/g, "\\\\");
 Parsed = {
 	Location: {
 		path: location.pathname.split("/"),
@@ -170,12 +166,13 @@ Number.prototype.isNegative = function() {
 }
 
 Array.prototype.median = function() {
-	if (this.length == 0) return "none";
-	let sort = [].concat(this),
-		halfway = (this.length / 2) - 1;
-	sort.sort()
-	if ((this.length / 2).isFloat()) {
-		if (Typeof(sort[Math.floor(halfway)]) == "number" && Typeof(sort[Math.ceil(halfway)]) == "number") return (sort[Math.ceil(halfway)] + sort[Math.floor(halfway)]) / 2; 
+	if (this.length == 0) return undefined;
+	let sort = [].concat(this).sort(),
+		a = (this.length / 2),
+		halfway = a - 1;
+	if (Math.ceil(a) != a) {
+		if (Typeof(sort[Math.floor(halfway)]) == "number" && Typeof(sort[Math.ceil(halfway)]) == "number")
+			return (sort[Math.ceil(halfway)] + sort[Math.floor(halfway)]) / 2; 
 		return sort[Math.ceil(halfway)] + sort[Math.floor(halfway)];
 	}
 	return sort[halfway];
@@ -183,22 +180,20 @@ Array.prototype.median = function() {
 
 Math.mean = array => {
 	let full = 0;
-	for (let i = 0; i < array.length; i++) {
-		full += array[i];
-	}
+	for (let i of array) 
+		full += i;
 	return full / array.length;
 }
 
 Math.range = array => {
 	let arr = [].concat(array);
 	arr.sort((a, b) => {
-		if (a > b) {
+		if (a > b) 
 			return 1;
-		} else if (a < b) {
+		else if (a < b) 
 			return -1;
-		} else {
+		else 
 			return 0;
-		}
 	});
 	let end = arr.pop();
 	return end - array[0];
@@ -243,15 +238,14 @@ Commons = {
 
 Array.prototype.randomize = function(randomizes = 10) {
 	for (let _ = 0; _ <= randomizes; _++) {
-		this.sort((a, b) => {
-			let random = Math.floor(Math.random() * 2);
-			if (random == 0) {
+		this.sort(() => {
+			let random = Math.round(Math.random() * 2);
+			if (random == 0)
 				return -1;
-			} else if (random == 1) {
+			else if (random == 1)
 				return 1;
-			} else {
+			else
 				return 0;
-			}
 		})
 	}
 }
@@ -354,10 +348,7 @@ Code = {
 	}
 }
 
-Math.Random = (min = 0, max = 5, forceint = true) => {
-	let random = min + Math.random() * (max - min);
-	return forceint ? Math.floor(random) : random;
-}
+Math.Random = (min = 0, max = 5, forceint = true) => forceint ? Math.floor(min + Math.random() * (max - min)) : min + Math.random() * (max - min);
 
 Object.prototype.keys = function() {
 	return Object.keys(this);
