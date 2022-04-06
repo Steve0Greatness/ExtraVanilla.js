@@ -1,11 +1,13 @@
 /* Version Checking */
 // When editeding please update the below version and the version file, make sure they are the same.
-window.extravanilla_version = "public version tracker 0.2.4.2";
+window.extravanilla_version = "public version tracker 0.2.5";
 window.extravanilla_versionTrackerURL = "https://raw.githubusercontent.com/Steve0Greatness/ExtraVanilla.js/main/download/version";
 fetch(window.extravanilla_versionTrackerURL)
 	.then(res => res.text())
 	.then(res => {
-		if (res != window.extravanilla_version) console.warn(`The current version of Extra Vanilla is "${res}", you're using "${window.extravanilla_version}". Unless you don't want new features, please update to ${res} from https://extravanilla.netlify.app/download/.`);
+		if (res != window.extravanilla_version) {
+			console.warn(`The current version of Extra Vanilla is "${res}", you're using "${window.extravanilla_version}". Unless you don't want new features, please update to ${res} from https://extravanilla.netlify.app/download/.`);
+		}
 	});
 
 Logic = {
@@ -299,18 +301,25 @@ class Fraction {
 	}
 }
 
-async function Notify(body, title = false, icon = false, link = false, vib = false, time = 10000) {
-	if (!title) title = document.title;
+async function Notify(body, title, icon, link, vib, time = 10000) {
+	//browser support
+	if (!("Notification" in window)) return;
+
 	let p = await Notification.requestPermission();
 	if (p != "granted") return;
+
 	let options = {
 		body: body,
 		icon: icon,
 		vibrate: vib
 	}
 	if (!icon) delete options.icon;
+	if (!title) title = document.title;
+
+	//sending
 	let notify = new Notification(title, options);
 	setTimeout(() => notify.close(), time);
+
 	if (!link) return;
 	notify.addEventListener("click", () => { window.open(link, "_blank") });
 }
@@ -348,7 +357,10 @@ Code = {
 	}
 }
 
-Math.Random = (min = 0, max = 5, forceint = true) => forceint ? Math.floor(min + Math.random() * (max - min)) : min + Math.random() * (max - min);
+Math.Random = (min = 0, max = 5, forceint = true) => {
+	let rand = min + Math.random() * (max - min);
+	return forceint ? Math.floor(rand) : rand;
+}
 
 Object.prototype.keys = function() {
 	return Object.keys(this);
@@ -360,5 +372,5 @@ Object.prototype.values = function() {
 Object.keysare = (object, keys) => Object.keys(object).sort().join() === keys.sort().join();
 JSON.keysare = Object.keysare;
 Object.prototype.keysare = function(keys) {
-	return Object.keysare(this, keys);
+	return Object.keys(this).sort().join() === keys.sort().join();
 }

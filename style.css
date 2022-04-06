@@ -158,3 +158,24 @@ input.url-copy {
     transition: all 750ms;
     font-family: "Cooper Black";
 }
+
+:any-link:has(img) {
+    position: relative;
+}
+
+:any-link > img {
+    position: absolute;
+    border-bottom: 1px var(--link) solid;
+    transform: translateY(2.25px);
+    padding-bottom: 1px;
+    filter: brightness(0);
+}
+
+:any-link:hover > img {
+    border-bottom-color: var(--link-hover);
+    filter: none;
+}
+
+:any-link:hover:active > img {
+    filter: hue-rotate(90deg) brightness(80%);
+}

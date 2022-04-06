@@ -14,6 +14,7 @@
     <a href="/">Back</a>
     <h1>Download</h1>
     <p>Extra Vanilla is a JavaScript Library made for making developing in JavaScript faster.</p>
+    <p id="version"></p>
     <a href="/download/extravanilla.min.js" download
        class="download_button button" data-compress="minified">
         Minified
@@ -53,6 +54,11 @@
                 load_notice()
             })
         }
+        fetch("./version")
+            .then(res => res.text())
+            .then(res => {
+                document.querySelector("#version").innerHTML = `The current version of Extra Vanilla is <code>${res}</code>`
+            })
     </script>
 </body>
 
