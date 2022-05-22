@@ -1,6 +1,7 @@
 /* Version Checking */
-// When editeding please update the below version and the version file, make sure they are the same.
-window.extravanilla_version = "public version tracker 0.2.5";
+// When editing please update the below version and the version file, make sure they are the same.
+console.warn("Extra Vanilla is being discontinued");
+window.extravanilla_version = "public version tracker 0.2.6";
 window.extravanilla_versionTrackerURL = "https://raw.githubusercontent.com/Steve0Greatness/ExtraVanilla.js/main/download/version";
 fetch(window.extravanilla_versionTrackerURL)
 	.then(res => res.text())
@@ -501,6 +502,10 @@ class Fraction {
 		// denominator: first.den * second.num
 	}
 
+	get reciprocal() {
+		return new Fraction(this.den, this.num);
+	}
+
 	/**
 	 * Multiplies 2 fractions
 	 * @param {number} first 
@@ -513,7 +518,7 @@ class Fraction {
 	 * ```
 	 * @returns {Fraction}
 	 */
-	static mutliply(first, second) {
+	static multiply(first, second) {
 		return new this(first.num * second.num, first.den * second.den);
 		// numerator: first.num * second.num,
 		// denominator: first.den * second.den
