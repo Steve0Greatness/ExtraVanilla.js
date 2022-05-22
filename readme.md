@@ -1,3 +1,6 @@
+  <h1>Notice</h1>  
+ Discontinuation
+
 # ExtraVanilla.JS
 A Clientside JavaScript library to make working with many features of Vanilla JavaScript easier.
 
